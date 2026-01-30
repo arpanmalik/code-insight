@@ -21,4 +21,9 @@ public class ProjectController {
                                        @RequestParam MultipartFile file) throws IOException {
         return projectService.createProject(name, file);
     }
+
+    @GetMapping("/home")
+    public String home(){
+        return "Home sweet home";
+    }
 }
