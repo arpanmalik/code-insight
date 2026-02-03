@@ -27,6 +27,9 @@ public class JavaParseService {
     @Autowired
     private ApiEndpointRepository apiEndpointRepository;
 
+    @Autowired
+    private MethodCallParseService methodCallParseService;
+
 
     public void parseJavaFiles(Long projectId, List<ProjectFileEntity> javaFiles)
             throws IOException {
@@ -50,6 +53,18 @@ public class JavaParseService {
                         component.setCreatedAt(LocalDateTime.now());
 
                         repository.save(component);
+
+                        if ("CONTROLLER".equals(type) || "SERVICE".equals(type)) {
+
+                            clazz.getMethods().forEach(method -> {
+                                methodCallParseService.extractMethodCalls(
+                                        projectId,
+                                        clazz.getNameAsString(),
+                                        method
+                                );
+                            });
+                        }
+
 
                         if ("CONTROLLER".equals(type)) {
 
