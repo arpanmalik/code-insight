@@ -73,4 +73,8 @@ public class ProjectService {
         return savedProject;
 
     }
+
+    public Object getProject(long id) {
+        return projectRepository.findById(id);
+    }
 }

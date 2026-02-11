@@ -5,6 +5,7 @@ import com.arpan.codeinsight.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,5 +26,10 @@ public class ProjectController {
     @GetMapping("/home")
     public String home(){
         return "Home sweet home";
+    }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Object> getProject(@PathVariable long id){
+        return ResponseEntity.ok(projectService.getProject(id));
     }
 }
